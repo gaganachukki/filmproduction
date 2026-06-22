@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FilmStudio - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <style>
+        .page-hero { 
+            background: none !important; 
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, rgba(2, 6, 23, 0.4) 0%, rgba(2, 6, 23, 0.9) 100%);
+            z-index: 1;
+        }
+        .slideshow-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+        }
+        .slideshow-slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: fadeSlideshow 15s infinite;
+        }
+        .slideshow-slide:nth-child(1) {
+            background-image: url('assets/hero1.webp');
+            animation-delay: 0s;
+        }
+        .slideshow-slide:nth-child(2) {
+            background-image: url('assets/hero2.webp');
+            animation-delay: 5s;
+        }
+        .slideshow-slide:nth-child(3) {
+            background-image: url('assets/hero3.webp');
+            animation-delay: 10s;
+        }
+        @keyframes fadeSlideshow {
+            0% { opacity: 0; transform: scale(1); }
+            10% { opacity: 1; }
+            33% { opacity: 1; transform: scale(1.05); }
+            43% { opacity: 0; }
+            100% { opacity: 0; transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+                <a href="index.html" class="logo">
+            <img src="assets/logo.webp" alt="Stackly" style="max-height: 36px; width: auto; display: block;">
+        </a>
+        <nav class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="about.html">About</a>
+            <a href="projects.html">Projects</a>
+            <a href="services.html">Services</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="nav-actions">
+            <a href="login.html" class="btn-login">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>
+                </svg> Login
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="slideshow-container">
+                <div class="slideshow-slide"></div>
+                <div class="slideshow-slide"></div>
+                <div class="slideshow-slide"></div>
+            </div>
+            <div class="hero-content">
+                <p class="tagline">Create. Produce. Elevate.</p>
+                <h1 class="hero-title">Craft the future<br>with <span class="highlight">FilmStudio.</span></h1>
+                <p class="hero-subtitle">Powerful production solutions to help your stories<br>grow, scale and stay ahead.</p>
+                <a href="#explore" class="btn-primary">
+                    Explore More
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                </a>
+            </div>
+        </section>
+
+        <section id="explore" class="content-section">
+            <h2 class="section-title">Why Choose <span class="highlight">FilmStudio?</span></h2>
+            <div class="grid-container">
+                <div class="card">
+                    <h3>Industry Leading Gear</h3>
+                    <p>We provide state-of-the-art cameras, lighting, and sound equipment to ensure your production is nothing short of spectacular.</p>
+                </div>
+                <div class="card">
+                    <h3>Award-Winning Crew</h3>
+                    <p>Our team of directors, cinematographers, and editors have years of experience working on top-tier global projects.</p>
+                </div>
+                <div class="card">
+                    <h3>End-to-End Production</h3>
+                    <p>From the initial scriptwriting and storyboarding to post-production and VFX, we handle the entire pipeline seamlessly.</p>
+                </div>
+                <div class="card">
+                    <h3>Global Reach</h3>
+                    <p>We facilitate shoots across multiple international locations, managing all logistics, permits, and local coordination.</p>
+                </div>
+                <div class="card">
+                    <h3>Immersive Post-Production</h3>
+                    <p>Our editing bays are equipped with the latest technology for 8K editing, Dolby Atmos mixing, and advanced color grading.</p>
+                </div>
+                <div class="card">
+                    <h3>Marketing & Distribution</h3>
+                    <p>We don't just make films; we help you find the right audience through tailored marketing strategies and festival runs.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" style="background-color: var(--bg-card);">
+            <h2 class="section-title animate-on-scroll">Our Featured <span class="highlight">Work</span></h2>
+            <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+                <div class="card animate-on-scroll" style="padding: 0; overflow: hidden; position: relative;">
+                    <img src="assets/projects_cover.webp" alt="Project 1" style="width: 100%; height: 250px; object-fit: cover; display: block;">
+                    <div style="padding: 1.5rem;">
+                        <h3>Neon Horizons</h3>
+                        <p style="margin-bottom: 1rem;">Award-winning Sci-Fi feature film exploring the depths of AI consciousness.</p>
+                        <a href="projects.html" style="color: var(--highlight-blue); text-decoration: none; font-weight: 600;">View Project &rarr;</a>
+                    </div>
+                </div>
+                <div class="card animate-on-scroll" style="padding: 0; overflow: hidden; position: relative;">
+                    <img src="assets/about_cover.webp" alt="Project 2" style="width: 100%; height: 250px; object-fit: cover; display: block;">
+                    <div style="padding: 1.5rem;">
+                        <h3>The Last Dawn</h3>
+                        <p style="margin-bottom: 1rem;">A high-octane action thriller set against the backdrop of a post-apocalyptic world.</p>
+                        <a href="projects.html" style="color: var(--highlight-blue); text-decoration: none; font-weight: 600;">View Project &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title animate-on-scroll">Client <span class="highlight">Testimonials</span></h2>
+            <div class="grid-container">
+                <div class="card animate-on-scroll" style="background: rgba(255,255,255,0.02); border-color: transparent;">
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="var(--highlight-blue)" style="margin-bottom: 1rem;"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem;">"Working with FilmStudio was a game-changer. Their technical expertise and creative vision brought our commercial to life in ways we never imagined."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white;">MR</div>
+                        <div>
+                            <h4 style="color: var(--text-white); margin-bottom: 0.2rem;">Marcus Rossi</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-gray);">Creative Director, Zenith Brands</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card animate-on-scroll" style="background: rgba(255,255,255,0.02); border-color: transparent;">
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="var(--highlight-blue)" style="margin-bottom: 1rem;"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem;">"The post-production suite at FilmStudio is world-class. The sound mixing and color grading pushed our indie film to Sundance quality."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white;">SL</div>
+                        <div>
+                            <h4 style="color: var(--text-white); margin-bottom: 0.2rem;">Sarah Lin</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-gray);">Independent Filmmaker</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(37, 99, 235, 0.1) 100%); text-align: center;">
+            <div style="max-width: 600px; margin: 0 auto;" class="animate-on-scroll">
+                <h2 style="font-size: 3rem; font-weight: 800; color: var(--text-white); margin-bottom: 1.5rem;">Let's make something <span class="highlight">awesome.</span></h2>
+                <p style="color: var(--text-gray); font-size: 1.15rem; line-height: 1.6; margin-bottom: 2.5rem;">Ready to start your next big production? Join our newsletter for industry insights or get in touch with our team directly.</p>
+                <form style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+                    <input type="email" placeholder="Enter your email" style="padding: 1rem 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); color: white; min-width: 300px; outline: none;">
+                    <button type="button" class="btn-primary" style="border: none;">Subscribe</button>
+                </form>
+                <p style="color: var(--text-gray); font-size: 0.9rem;">Or <a href="contact.html" style="color: var(--highlight-blue); text-decoration: none;">contact us directly</a> for project inquiries.</p>
+            </div>
+        </section>
+    </main>
+
+        <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                                <a href="index.html" class="footer-logo">
+                    <img src="assets/logo.webp" alt="Stackly" style="max-height: 42px; width: auto; display: block;">
+                </a>
+                <p class="footer-desc">Creating timeless cinematic experiences that inspire and transform the way people see the world.</p>
+                <div class="social-links">
+                    <a href="#"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                    <a href="#"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+                    <a href="#"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="#"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <a href="about.html">About Us</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h3>Services</h3>
+                <a href="services.html">Pre-Production</a>
+                <a href="services.html">Principal Photography</a>
+                <a href="services.html">Post-Production</a>
+                <a href="services.html">Audio & Sound Design</a>
+                <a href="services.html">Studio Rentals</a>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <p class="contact-title">Get in Touch</p>
+                <div class="contact-item">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span>Hollywood, California</span>
+                </div>
+                <div class="contact-item">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <span>+1 234 567 8901</span>
+                </div>
+                <div class="contact-item">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <span>info@filmstudio.com</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 FilmStudio Production. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
