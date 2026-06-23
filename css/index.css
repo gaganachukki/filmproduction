@@ -235,3 +235,11 @@ body {
         font-size: 2.8rem;
     }
 }
+
+/* Mobile Overrides */
+@media (max-width: 768px) {
+
+    .brands-track { animation: slide 15s linear infinite; }
+    .hero-video { width: 100%; max-width: 100vw; }
+
+}

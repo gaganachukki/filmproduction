@@ -1,0 +1,12 @@
+
+/* Mobile Overrides */
+@media (max-width: 768px) {
+
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .case-study-split { flex-direction: column; }
+    .case-study-split.reverse { flex-direction: column; }
+    .case-info { padding: 2rem; }
+    .case-image { min-height: 250px; }
+    .filters { flex-wrap: wrap; justify-content: center; }
+
+}

@@ -32,6 +32,7 @@ body {
 
 /* Common Content Section */
 .content-section { padding: 4rem 4rem; margin-bottom: 2rem; position: relative; z-index: 5; background-color: var(--bg-dark); }
+.content-section:last-of-type { margin-bottom: 0; }
 .section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 3rem; text-align: center; }
 .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
 .card { background: var(--bg-card); border: 1px solid var(--nav-border); border-radius: 12px; padding: 2.5rem; transition: transform 0.3s ease, border-color 0.3s ease; }
@@ -68,13 +69,13 @@ body {
     margin-bottom: 1.5rem;
 }
 .footer-desc { line-height: 1.6; margin-bottom: 2rem; font-size: 0.95rem; }
-.social-links { display: flex; gap: 1rem; }
-.social-links a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; color: var(--text-white); transition: all 0.3s ease; }
-.social-links a:hover { background: var(--highlight-blue); color: white; }
-
 .footer-col h3 { color: var(--text-white); font-size: 1.3rem; margin-bottom: 1.5rem; font-family: serif; letter-spacing: 0.5px; }
 .footer-col a { display: block; color: var(--text-gray); text-decoration: none; margin-bottom: 1rem; transition: color 0.3s ease; font-size: 0.95rem; }
 .footer-col a:hover { color: var(--text-white); }
+
+.social-links { display: flex; gap: 1rem; margin-bottom: 1rem; }
+.social-links a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; color: var(--text-white); transition: all 0.3s ease; margin-bottom: 0; }
+.social-links a:hover { background: var(--highlight-blue); color: white; }
 .contact-title { margin-bottom: 1rem; color: var(--text-gray); font-size: 0.95rem; }
 .contact-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; font-size: 0.95rem; }
 .contact-item svg { color: var(--text-gray); flex-shrink: 0; margin-top: 2px; }
@@ -146,4 +147,285 @@ html {
 .card:hover {
     box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.2);
     transform: translateY(-8px) scale(1.02);
+}
+
+/* New Animations for Home Page Sections */
+.slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+.fade-scale-up {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.slide-in-left.is-visible,
+.slide-in-right.is-visible,
+.fade-scale-up.is-visible {
+    opacity: 1;
+    transform: translateX(0) scale(1) translateY(0);
+}
+
+/* --- About Page New Sections CSS --- */
+
+/* 1. Core Values (Expanding Flex Tiles) */
+.flex-tile-container {
+    display: flex; gap: 1rem; height: 350px; overflow: hidden; width: 100%; max-width: 1200px; margin: 0 auto;
+}
+.flex-tile {
+    flex: 1; background: var(--bg-card); border-radius: 12px; transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease; padding: 2rem; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
+}
+.flex-tile:hover {
+    flex: 3; background: rgba(37, 99, 235, 0.1); border-color: var(--highlight-blue);
+}
+.flex-tile h3 { font-size: 1.5rem; color: var(--text-white); margin-bottom: 0.5rem; white-space: nowrap; transition: transform 0.4s ease; }
+.flex-tile p { color: var(--text-gray); opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; transition-delay: 0.1s; }
+.flex-tile:hover h3 { transform: translateY(-10px); }
+.flex-tile:hover p { opacity: 1; transform: translateY(0); }
+.reveal-rotate { opacity: 0; transform: perspective(1000px) rotateX(-20deg) translateY(40px); transition: all 0.8s ease; will-change: opacity, transform; }
+.reveal-rotate.is-visible { opacity: 1; transform: perspective(1000px) rotateX(0deg) translateY(0); }
+
+/* 2. Vertical Timeline */
+.vertical-timeline {
+    position: relative; max-width: 800px; margin: 0 auto; padding: 2rem 0;
+}
+.vertical-timeline::before {
+    content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: rgba(59, 130, 246, 0.3); transform: translateX(-50%);
+}
+.timeline-node {
+    display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 4rem; position: relative; opacity: 0; transform: translateY(30px); transition: all 0.8s ease;
+}
+.timeline-node.is-visible { opacity: 1; transform: translateY(0); }
+.timeline-content { width: 45%; background: var(--bg-card); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); position: relative; }
+.timeline-node:nth-child(even) { flex-direction: row-reverse; }
+.timeline-year {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: var(--bg-dark); color: var(--highlight-blue); font-weight: 800; font-size: 1.2rem; padding: 0.5rem 1rem; border-radius: 20px; border: 2px solid var(--highlight-blue); z-index: 2; box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+}
+
+/* 3. Parallax Section */
+.parallax-section {
+    background-image: url('../assets/projects_cover.webp'); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; padding: 8rem 2rem; text-align: center; margin-bottom: 2rem;
+}
+.parallax-section::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.85); z-index: 1;
+}
+.parallax-content {
+    position: relative; z-index: 2; max-width: 1000px; margin: 0 auto; display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;
+}
+.float-up { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.float-up.is-visible { opacity: 1; transform: translateY(0); }
+
+/* 4. Asymmetric Culture Showcase */
+.asymmetric-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto;
+}
+.zoom-in-bounce { opacity: 0; transform: scale(0.8); transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.zoom-in-bounce.is-visible { opacity: 1; transform: scale(1); }
+
+/* 5. Glowing Border CTA */
+.glowing-cta-wrapper {
+    position: relative; max-width: 700px; margin: 0 auto; padding: 3px; border-radius: 16px; overflow: hidden; background: var(--bg-dark); z-index: 1;
+}
+.glowing-cta-wrapper::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(transparent, transparent, transparent, var(--highlight-blue)); animation: border-spin 4s linear infinite; z-index: -2;
+}
+.glowing-cta-wrapper::after {
+    content: ''; position: absolute; inset: 3px; background: var(--bg-card); border-radius: 14px; z-index: -1;
+}
+.glowing-cta-content { padding: 4rem 2rem; text-align: center; }
+@keyframes border-spin { 100% { transform: rotate(360deg); } }
+
+@media (max-width: 768px) {
+    .flex-tile-container { flex-direction: column; height: auto; }
+    .vertical-timeline::before { left: 0; }
+    .timeline-node { flex-direction: column !important; align-items: flex-start; padding-left: 2rem; }
+    .timeline-year { left: 0; top: 0; transform: translate(-50%, 0); }
+    .timeline-content { width: 100%; }
+    .asymmetric-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* --- Netflix Style Projects Page CSS --- */
+.netflix-container {
+    padding: 0 4rem;
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 5;
+    background-color: var(--bg-dark);
+}
+.netflix-category-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+}
+.netflix-row {
+    padding: 2rem 40px;
+    margin: -2rem -40px;
+    position: relative;
+    z-index: 1;
+    transition: z-index 0s;
+    overflow-x: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.netflix-row::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}
+.netflix-row:hover { z-index: 20; }
+.netflix-row-inner {
+    display: flex;
+    gap: 0.5rem;
+    width: max-content;
+    position: relative;
+}
+.netflix-card {
+    flex: 0 0 auto;
+    width: 250px;
+    height: 140px;
+    position: relative;
+    border-radius: 4px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    cursor: pointer;
+}
+.netflix-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.netflix-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+.netflix-card:hover {
+    transform: scale(1.3);
+    z-index: 10;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+}
+.netflix-card:hover .netflix-card-overlay {
+    opacity: 1;
+}
+.netflix-card h4 {
+    color: white;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+}
+.netflix-card p {
+    color: var(--text-gray);
+    font-size: 0.75rem;
+}
+
+/* Fix for Netflix row card overlap bug */
+.netflix-row { position: relative; z-index: 1; transition: z-index 0s; }
+.netflix-row:hover { z-index: 20; }
+.netflix-container { overflow: hidden; } /* Ensure rows don't break horizontal flow */
+
+/* --- Projects Page New Sections --- */
+
+/* 1. Director's Spotlight Parallax */
+.spotlight-parallax {
+    background-image: url('../assets/about_cover.webp');
+    background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; padding: 10rem 2rem; text-align: center;
+    margin: 4rem -4rem; /* Break out of netflix-container padding */
+}
+.spotlight-parallax::before {
+    content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, var(--bg-dark) 0%, rgba(2,6,23,0.6) 50%, var(--bg-dark) 100%); z-index: 1;
+}
+.spotlight-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+.blur-reveal { filter: blur(20px); opacity: 0; transform: scale(1.1); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.blur-reveal.is-visible { filter: blur(0); opacity: 1; transform: scale(1); }
+
+/* 2. VFX Breakdown Interactive */
+.vfx-breakdown-container { display: flex; gap: 2rem; max-width: 1200px; margin: 0 auto; overflow: hidden; padding: 4rem 2rem; }
+.vfx-half { flex: 1; position: relative; border-radius: 12px; overflow: hidden; height: 400px; }
+.vfx-half img { width: 100%; height: 100%; object-fit: cover; }
+.vfx-label { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); color: white; padding: 0.5rem 1.5rem; border-radius: 30px; font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.2); }
+.split-reveal-left { transform: translateX(-100px); opacity: 0; transition: all 1s cubic-bezier(0.25, 1, 0.5, 1); }
+.split-reveal-right { transform: translateX(100px); opacity: 0; transition: all 1s cubic-bezier(0.25, 1, 0.5, 1); }
+.split-reveal-left.is-visible, .split-reveal-right.is-visible { transform: translateX(0); opacity: 1; }
+
+/* 3. Upcoming Marquee */
+.marquee-container { width: 100%; overflow: hidden; background: var(--bg-card); padding: 3rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; white-space: nowrap; }
+.marquee-content { display: flex; animation: marquee-scroll 30s linear infinite; }
+.marquee-item { font-size: 3rem; font-weight: 800; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.2); padding: 0 3rem; display: flex; align-items: center; text-transform: uppercase; }
+.marquee-item:hover { color: var(--highlight-blue); -webkit-text-stroke: 0px; cursor: default; transition: color 0.3s ease; }
+.marquee-dot { display: inline-block; width: 15px; height: 15px; background: var(--highlight-blue); border-radius: 50%; margin: 0 3rem; box-shadow: 0 0 15px var(--highlight-blue); }
+
+@keyframes marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+    .netflix-container { padding: 0 1.5rem; }
+    .netflix-card { width: 150px; height: 84px; }
+    .spotlight-parallax { margin: 4rem -1.5rem; }
+    .vfx-breakdown-container { flex-direction: column; }
+    .vfx-half { height: 250px; }
+    .marquee-item { font-size: 2rem; }
+}
+
+/* =========================================================================
+   GLOBAL MOBILE RESPONSIVENESS OVERHAUL
+   ========================================================================= */
+.mobile-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    z-index: 101;
+}
+
+@media (max-width: 768px) {
+    /* Navbar Mobile */
+    .navbar { padding: 1rem 1.5rem; justify-content: space-between; }
+    .mobile-menu-btn { display: block; margin-left: auto; margin-right: 1rem; }
+    
+    .nav-links {
+        position: fixed; top: 0; right: -100%; width: 250px; height: 100vh;
+        background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(20px);
+        flex-direction: column; padding: 6rem 2rem 2rem; gap: 2rem;
+        transition: right 0.3s ease; border-left: 1px solid rgba(255,255,255,0.1);
+        z-index: 100;
+    }
+    .nav-links.nav-active { right: 0; }
+    
+    /* Common Elements Mobile */
+    .page-hero { padding: 0 1.5rem; min-height: 80vh; background-position: center; }
+    .hero-content { margin-top: 4rem; padding-top: 0; }
+    .hero-title { font-size: 2.5rem; line-height: 1.2; }
+    .hero-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+    
+    .content-section { padding: 3rem 1.5rem; }
+    .section-title { font-size: 2rem; margin-bottom: 2rem; }
+    .grid-container { grid-template-columns: 1fr; gap: 1.5rem; }
+    .card { padding: 1.5rem; }
+    
+    /* Footer Mobile */
+    .footer-container { padding: 0 1.5rem 3rem 1.5rem; grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; text-align: center; padding: 1.5rem; gap: 1rem; }
+    
+    /* Global Overrides to prevent horizontal scrolling */
+    body { overflow-x: hidden; width: 100%; }
+    main { overflow-x: hidden; }
 }

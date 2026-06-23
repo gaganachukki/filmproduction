@@ -1,0 +1,14 @@
+
+/* Mobile Overrides */
+@media (max-width: 768px) {
+
+    .flex-tile-container { flex-direction: column; height: auto; gap: 1rem; }
+    .flex-tile { min-height: 150px; }
+    .timeline-item { width: 100%; padding-left: 3rem; padding-right: 0 !important; }
+    .timeline-item:nth-child(even) { left: 0; }
+    .timeline-dot { left: 10px !important; }
+    .vertical-timeline::after { left: 18px; }
+    .team-grid { grid-template-columns: 1fr; }
+    .award-grid { grid-template-columns: 1fr; }
+
+}

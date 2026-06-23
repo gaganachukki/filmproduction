@@ -1,0 +1,198 @@
+
+/* Global Offices Section */
+.offices-section {
+    padding: 6rem 4rem;
+    background: var(--bg-card);
+    text-align: center;
+}
+.offices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 4rem auto 0;
+}
+.office-card {
+    position: relative;
+    padding: 3rem 2rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+.office-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    border-color: rgba(59,130,246,0.3);
+}
+.office-map-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(circle at center, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+}
+.office-content {
+    position: relative;
+    z-index: 1;
+}
+.office-pin {
+    width: 60px; height: 60px;
+    margin: 0 auto 1.5rem;
+    background: rgba(59,130,246,0.1);
+    color: var(--highlight-blue);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+}
+.office-card:hover .office-pin {
+    animation: bounce-pin 1s ease infinite;
+}
+@keyframes bounce-pin {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+.office-pin::after {
+    content: ''; position: absolute;
+    bottom: -10px; width: 20px; height: 6px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 50%;
+    filter: blur(2px);
+    animation: shadow-pulse 1s ease infinite;
+    opacity: 0;
+}
+.office-card:hover .office-pin::after { opacity: 1; }
+@keyframes shadow-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(0.6); opacity: 0.2; }
+}
+.office-card h3 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.office-card p { color: var(--text-gray); line-height: 1.6; margin-bottom: 1.5rem; }
+.office-phone { display: inline-block; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; font-weight: 600; font-size: 0.9rem; }
+
+/* Department Contacts Section */
+.departments-section {
+    padding: 6rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.departments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+.dept-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    background: linear-gradient(145deg, rgba(15,23,42,0.8) 0%, rgba(2,6,23,0.9) 100%);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.dept-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; width: 4px; height: 100%;
+    background: var(--highlight-blue);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: bottom;
+}
+.dept-card:hover::before { transform: scaleY(1); }
+.dept-icon {
+    width: 50px; height: 50px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+.dept-card:hover .dept-icon {
+    background: var(--highlight-blue);
+    color: white;
+}
+.dept-info h4 { font-size: 1.2rem; margin-bottom: 0.3rem; }
+.dept-info p { color: var(--text-gray); font-size: 0.9rem; }
+.dept-arrow {
+    margin-left: auto;
+    color: rgba(255,255,255,0.2);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.dept-card:hover .dept-arrow { color: var(--highlight-blue); transform: translateX(5px); }
+
+/* Schedule Call Section */
+.schedule-section {
+    padding: 8rem 4rem;
+    background-image: url('../assets/media__1782188671252.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    text-align: center;
+}
+.schedule-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(2,6,23,0.85);
+    backdrop-filter: blur(5px);
+}
+.schedule-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+}
+.calendar-icon-wrapper {
+    width: 100px; height: 100px;
+    margin: 0 auto 2rem;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+}
+.schedule-content h2 { font-size: 3rem; margin-bottom: 1rem; }
+.schedule-content p { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 3rem; line-height: 1.6; }
+.btn-schedule {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    padding: 1.2rem 2.5rem;
+    background: white; color: black;
+    border-radius: 50px; font-weight: 700; font-size: 1.1rem;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btn-schedule:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(255,255,255,0.2);
+}
+
+@media (max-width: 768px) {
+    .offices-section, .departments-section, .schedule-section { padding: 4rem 1.5rem; }
+    .schedule-content h2 { font-size: 2.2rem; }
+    .offices-grid { gap: 2rem; }
+}
+
+/* Mobile Overrides */
+@media (max-width: 768px) {
+
+    .offices-grid { grid-template-columns: 1fr; }
+    .departments-grid { grid-template-columns: 1fr; }
+    .dept-card { padding: 1.5rem; }
+    .schedule-content h2 { font-size: 2rem; }
+
+}
