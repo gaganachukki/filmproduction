@@ -155,6 +155,9 @@ body {
             .mobile-hamburger { display: block !important; }
             .mobile-topbar-logo { display: block !important; margin-right: auto !important; }
             .user-profile span { display: none; }
+            .sidebar-logo { align-items: center; text-align: center; }
+            .sidebar-link { justify-content: center; }
+            .sidebar-bottom { display: flex; justify-content: center; }
 
             .mobile-close-btn { display: block !important; position: absolute; top: 1.5rem; right: 1.5rem; background: transparent; border: none; color: white; cursor: pointer; }
             
@@ -179,6 +182,13 @@ body {
             .projects-grid { grid-template-columns: 1fr; }
         }
 
+    
+        /* Restore Mobile View (max 480px) to old left-aligned state */
+        @media (max-width: 480px) {
+            .sidebar-logo { align-items: flex-start; text-align: left; }
+            .sidebar-link { justify-content: flex-start; }
+            .sidebar-bottom { display: block; justify-content: flex-start; }
+        }
     </style>
 </head>
 <body>

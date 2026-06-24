@@ -499,3 +499,52 @@ html {
 @media (max-width: 480px) {
     .glowing-cta-content { padding: 3rem 1rem; }
 }
+
+/* Mobile overrides for VFX section */
+@media (max-width: 480px) {
+    .vfx-breakdown-container { padding: 3rem 1rem !important; gap: 1rem !important; }
+    .vfx-half { 
+        flex: none !important; 
+        height: 250px !important; 
+        min-height: 250px !important;
+        width: 100% !important; 
+    }
+    .vfx-label { 
+        font-size: 0.7rem !important; 
+        padding: 0.3rem 1rem !important; 
+        bottom: 15px !important; 
+        left: 15px !important; 
+        letter-spacing: 0.5px !important;
+    }
+}
+
+
+/* Custom Dark Theme Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) var(--bg-dark);
+}
+
+
+/* Slightly increase nav link size specifically for tablet view */
+@media (min-width: 481px) and (max-width: 768px) {
+    .nav-links a {
+        font-size: 1.35rem;
+    }
+}

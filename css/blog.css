@@ -238,3 +238,30 @@
     .newsletter-form { flex-direction: column; }
 
 }
+
+/* Extra Small Mobile Overrides (320px Horizontal Scroll Fix) */
+@media (max-width: 480px) {
+
+    .featured-meta { flex-wrap: wrap; font-size: 0.8rem !important; gap: 0.5rem !important; }
+    
+    .featured-content { padding: 1.5rem !important; max-width: 100%; box-sizing: border-box; }
+    .featured-content h2 { 
+        font-size: 1.6rem !important; 
+        word-wrap: break-word; 
+        overflow-wrap: break-word; 
+        hyphens: auto; 
+    }
+
+
+    .trending-section { padding-left: 0 !important; padding-right: 0 !important; }
+    .trending-header { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .trending-scroll { 
+        padding-left: 1.5rem !important; 
+        padding-right: 1.5rem !important; 
+        scroll-padding-left: 1.5rem; 
+    }
+    .trending-card { 
+        min-width: 80vw !important; 
+        max-width: 85vw !important; 
+    }
+}

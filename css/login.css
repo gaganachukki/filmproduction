@@ -225,3 +225,22 @@
 .bottom-text a:hover {
     color: var(--text-white);
 }
+
+
+/* Mobile Specific Overrides */
+@media (max-width: 480px) {
+    .back-home {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-bottom: 2rem;
+        align-self: center;
+    }
+    .form-container h2 {
+        font-size: 2rem;
+    }
+    .role-btn {
+        text-align: center;
+        padding: 1rem;
+    }
+}

@@ -17,6 +17,11 @@
         .form-control:focus { outline: none; border-color: var(--highlight-blue); }
         textarea.form-control { resize: vertical; min-height: 120px; }
         .btn-submit { width: 100%; justify-content: center; margin-top: 1rem; cursor: pointer; border: none; }
+    
+        @media (max-width: 480px) {
+            .contact-form { padding: 1.5rem; }
+            .content-section { padding: 2rem 1rem !important; }
+        }
     </style>
 </head>
 <body>
@@ -67,7 +72,7 @@
         <section id="contact-form-section" class="content-section">
             <h2 class="section-title">Send a <span class="highlight">Message</span></h2>
             <div class="contact-form">
-                <form action="404.html" method="POST">
+                <form action="404.html" method="GET">
                     <div class="form-group">
                         <label for="name">Full Name</label>
                         <input type="text" id="name" class="form-control" placeholder="John Doe" required>
@@ -108,9 +113,9 @@
                         <div class="office-pin">
                             <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         </div>
-                        <h3>Los Angeles</h3>
-                        <p>Fairlands, Omalur Main Road<br>Salem, Tamil Nadu 636016<br>India</p>
-                        <span class="office-phone">+91 98765 43210</span>
+                        <h3>Bangalore</h3>
+                        <p>100 Feet Road, Indiranagar<br>Bengaluru, Karnataka 560038<br>India</p>
+                        <span class="office-phone">+91 98765 12345</span>
                     </div>
                 </div>
                 <div class="office-card">
@@ -119,9 +124,9 @@
                         <div class="office-pin">
                             <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         </div>
-                        <h3>London</h3>
-                        <p>45 Soho Square, Floor 3<br>London W1D 4PZ<br>United Kingdom</p>
-                        <span class="office-phone">+44 20 7946 0958</span>
+                        <h3>Hyderabad</h3>
+                        <p>HITEC City, Madhapur<br>Hyderabad, Telangana 500081<br>India</p>
+                        <span class="office-phone">+91 98765 12346</span>
                     </div>
                 </div>
                 <div class="office-card">
@@ -130,9 +135,9 @@
                         <div class="office-pin">
                             <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         </div>
-                        <h3>Tokyo</h3>
-                        <p>Roppongi Hills Mori Tower<br>Minato City, Tokyo 106-6108<br>Japan</p>
-                        <span class="office-phone">+81 3-5555-0123</span>
+                        <h3>Kolkata</h3>
+                        <p>Park Street, Mullick Bazar<br>Kolkata, West Bengal 700016<br>India</p>
+                        <span class="office-phone">+91 98765 12347</span>
                     </div>
                 </div>
             </div>
@@ -171,6 +176,22 @@
                     <div class="dept-info">
                         <h4>General Support</h4>
                         <p>help@filmstudio.com</p>
+                    </div>
+                    <div class="dept-arrow"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+                </div>
+                <div class="dept-card">
+                    <div class="dept-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div>
+                    <div class="dept-info">
+                        <h4>Visual Effects</h4>
+                        <p>vfx@filmstudio.com</p>
+                    </div>
+                    <div class="dept-arrow"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+                </div>
+                <div class="dept-card">
+                    <div class="dept-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+                    <div class="dept-info">
+                        <h4>Legal & Licensing</h4>
+                        <p>legal@filmstudio.com</p>
                     </div>
                     <div class="dept-arrow"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
                 </div>
@@ -252,5 +273,56 @@
     </footer>
 
     <script src="js/main.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const nameInput = document.getElementById('name');
+            const subjectInput = document.getElementById('subject');
+            const messageInput = document.getElementById('message');
+
+            function getWords(str) {
+                return str.trim().split(/\s+/).filter(w => w.length > 0);
+            }
+
+            if (nameInput) {
+                nameInput.addEventListener('input', function() {
+                    // Only letters and spaces
+                    this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+                });
+            }
+
+            if (subjectInput) {
+                subjectInput.addEventListener('input', function() {
+                    // Only letters and spaces
+                    this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+                    
+                    // 8 words limit
+                    let words = getWords(this.value);
+                    if (words.length > 8) {
+                        let match = this.value.match(/^(\s*(?:[a-zA-Z]+\s+){7}[a-zA-Z]+)/);
+                        if (match) this.value = match[1];
+                    }
+                });
+            }
+
+            if (messageInput) {
+                messageInput.addEventListener('input', function() {
+                    // 100 words limit
+                    let words = getWords(this.value);
+                    if (words.length > 100) {
+                        let parts = this.value.match(/\S+|\s+/g) || [];
+                        let wordCount = 0;
+                        let validString = "";
+                        for (let part of parts) {
+                            if (part.trim().length > 0) wordCount++;
+                            if (wordCount > 100 && part.trim().length > 0) break;
+                            validString += part;
+                        }
+                        this.value = validString;
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
