@@ -19,7 +19,8 @@ body {
     font-family: 'Inter', sans-serif; 
     background-color: var(--bg-dark); 
     color: var(--text-white);
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 280px 1fr; /* BULLETPROOF LAYOUT */
 }
@@ -33,6 +34,7 @@ body {
     height: 100vh;
     position: sticky;
     top: 0;
+    overflow-y: auto;
 }
 .sidebar-logo { padding: 0 2rem; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.5rem; }
 .sidebar-logo img { height: 36px; width: fit-content; }
@@ -48,12 +50,7 @@ body {
 .logout-link { color: #ef4444; }
 
 /* MAIN CONTENT AREA */
-.dashboard-main {
-    padding: 2rem 3rem;
-    overflow-y: auto;
-    height: 100vh;
-    position: relative;
-}
+.dashboard-main { width: 100%; padding: 1.5rem 1rem; height: auto; overflow-y: visible; }
 .topbar-actions {
     display: flex; justify-content: flex-end; align-items: center; gap: 1.5rem;
     margin-bottom: 2rem;
@@ -108,6 +105,10 @@ body {
 .donut-legend .legend-item { display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.9rem; }
 .legend-color { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 0.5rem; }
 
+
+/* FULL PIE CHART */
+.css-full-pie-chart { width: 180px; height: 180px; border-radius: 50%; margin: 0 auto 2rem auto; background: conic-gradient(var(--admin-accent) 0% 55%, var(--admin-secondary) 55% 85%, #3b82f6 85% 100%); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: rotate(-15deg); }
+
 /* TABLES & GRIDS */
 .content-card { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
 .data-table { width: 100%; border-collapse: collapse; text-align: left; }
@@ -141,42 +142,36 @@ body {
     
         /* DASHBOARD MOBILE RESPONSIVENESS */
         @media (max-width: 768px) {
-            body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+            body { display: block; height: auto; overflow: auto; min-height: 100vh; overflow-x: hidden; }
             
-            /* Hide top sidebar stuff */
-            .sidebar-logo, .sidebar-bottom { display: none; }
             
-            /* Convert sidebar to bottom nav */
             .sidebar { 
-                position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; 
-                flex-direction: row; padding: 0; z-index: 1000;
-                border-right: none; border-top: 1px solid rgba(255,255,255,0.1);
-                background: var(--bg-card);
+                position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; overflow-y: auto; 
+                z-index: 3000; border-right: none; background: var(--bg-card);
+                transition: left 0.3s ease; padding: 2rem 0;
             }
-            .sidebar-menu { 
-                flex-direction: row; padding: 0; width: 100%; 
-                justify-content: space-around; align-items: center;
-                overflow-x: auto;
-            }
-            .sidebar-link { 
-                flex-direction: column; gap: 0.2rem; padding: 0.5rem; 
-                font-size: 0.65rem; border-left: none; border-top: 3px solid transparent;
-                border-radius: 0; text-align: center; flex: 1; min-width: 70px;
-                white-space: nowrap;
-            }
-            .sidebar-link.active { border-top-color: var(--highlight-blue); border-left-color: transparent; }
-            .sidebar-link svg { width: 22px; height: 22px; margin: 0 auto; }
+            .sidebar.mobile-open { left: 0; }
+            .mobile-nav-group { display: flex !important; }
+            .mobile-hamburger { display: block !important; }
+            .mobile-topbar-logo { display: block !important; margin-right: auto !important; }
+            .user-profile span { display: none; }
+
+            .mobile-close-btn { display: block !important; position: absolute; top: 1.5rem; right: 1.5rem; background: transparent; border: none; color: white; cursor: pointer; }
             
             /* Main Content Adjustments */
-            .dashboard-main { 
-                width: 100%; padding: 1.5rem 1rem 80px 1rem; 
-                height: calc(100vh - 70px); 
-            }
+            .dashboard-main { width: 100%; padding: 1.5rem 1rem; height: auto; overflow-y: visible; }
             .topbar-actions { flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
             .search-bar { width: 100%; order: 3; }
             
             /* Typography & Grids */
-            .tab-header h1 { font-size: 1.8rem; }
+            .tab-header h1 { font-size: 1.4rem; }
+            .tab-header p { font-size: 0.85rem; }
+            .stat-info h3 { font-size: 1.6rem; }
+            .stat-info p { font-size: 0.75rem; }
+            .stat-icon { width: 45px; height: 45px; }
+            .stat-icon svg { width: 22px; height: 22px; }
+            .chart-card h3 { font-size: 1rem; }
+            .user-profile .avatar { width: 32px; height: 32px; font-size: 0.8rem; }
             .stats-grid { grid-template-columns: 1fr; gap: 1rem; }
             .charts-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .content-card { padding: 1rem; overflow-x: auto; }
@@ -188,30 +183,33 @@ body {
 </head>
 <body>
     <aside class="sidebar">
+        <button class="mobile-close-btn" onclick="toggleSidebar()" style="display:none;">
+            <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
         <div class="sidebar-logo">
             <img src="assets/logo.webp" alt="Stackly">
             <span class="sidebar-role">Admin Control</span>
         </div>
         <nav class="sidebar-menu">
-            <a href="#" class="sidebar-link active" onclick="switchTab('dashboard', this)">
+            <a href="#" class="sidebar-link active" onclick="toggleSidebar(); switchTab('dashboard', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Dashboard Overview
             </a>
-            <a href="#" class="sidebar-link" onclick="switchTab('productions', this)">
+            <a href="#" class="sidebar-link" onclick="toggleSidebar(); switchTab('productions', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg> Active Productions
             </a>
-            <a href="#" class="sidebar-link" onclick="switchTab('clients', this)">
+            <a href="#" class="sidebar-link" onclick="toggleSidebar(); switchTab('clients', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg> Client Management
             </a>
-            <a href="#" class="sidebar-link" onclick="switchTab('crew', this)">
+            <a href="#" class="sidebar-link" onclick="toggleSidebar(); switchTab('crew', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect></svg> Crew Scheduling
             </a>
-            <a href="#" class="sidebar-link" onclick="switchTab('equipment', this)">
+            <a href="#" class="sidebar-link" onclick="toggleSidebar(); switchTab('equipment', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline></svg> Equipment Inventory
             </a>
-            <a href="#" class="sidebar-link" onclick="switchTab('financials', this)">
+            <a href="#" class="sidebar-link" onclick="toggleSidebar(); switchTab('financials', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> Financials
             </a>
-            <a href="#" class="sidebar-link" onclick="switchTab('settings', this)">
+            <a href="#" class="sidebar-link" onclick="toggleSidebar(); switchTab('settings', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle></svg> Settings
             </a>
         </nav>
@@ -224,6 +222,12 @@ body {
 
     <main class="dashboard-main">
         <div class="topbar-actions">
+            <div class="mobile-nav-group" style="display: none; align-items: center; gap: 1rem; margin-right: auto;">
+                <button class="mobile-hamburger" onclick="toggleSidebar()" aria-label="Toggle Menu" style="background:transparent; border:none; color:white; cursor:pointer;">
+                    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <img src="assets/logo.webp" class="mobile-topbar-logo" style="height: 24px;" alt="Logo">
+            </div>
             <div class="search-bar">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 <input type="text" placeholder="Search operations...">
@@ -248,18 +252,48 @@ body {
             <section class="charts-grid">
                 <div class="chart-card">
                     <h3>Monthly Revenue Projection ($)</h3>
-                    <div class="css-bar-chart">
-                        <div class="bar" style="height: 30%;"><div class="bar-tooltip">$120k</div><span>Jan</span></div>
-                        <div class="bar" style="height: 45%;"><div class="bar-tooltip">$180k</div><span>Feb</span></div>
-                        <div class="bar" style="height: 60%;"><div class="bar-tooltip">$240k</div><span>Mar</span></div>
-                        <div class="bar" style="height: 80%; background: linear-gradient(0deg, #10b981 0%, #34d399 100%);"><div class="bar-tooltip">$320k</div><span>Apr</span></div>
-                        <div class="bar" style="height: 50%;"><div class="bar-tooltip">$200k</div><span>May</span></div>
-                        <div class="bar" style="height: 95%; background: linear-gradient(0deg, #10b981 0%, #34d399 100%);"><div class="bar-tooltip">$428k</div><span>Jun</span></div>
+                    <div class="svg-line-chart-container" style="position: relative; height: 250px; width: 100%; margin-top: 1rem;">
+                        <svg viewBox="0 0 500 200" style="width: 100%; height: calc(100% - 30px); overflow: visible;">
+                            <defs>
+                                <linearGradient id="areaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="var(--admin-accent)" stop-opacity="0.5" />
+                                    <stop offset="100%" stop-color="var(--admin-accent)" stop-opacity="0" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Grid lines -->
+                            <line x1="0" y1="40" x2="500" y2="40" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                            <line x1="0" y1="100" x2="500" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                            <line x1="0" y1="160" x2="500" y2="160" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                            
+                            <!-- Area Path -->
+                            <path d="M 0 160 Q 50 160 80 130 T 160 100 T 240 120 T 320 80 T 400 130 T 500 40 L 500 200 L 0 200 Z" fill="url(#areaGrad)"/>
+                            <!-- Line Path -->
+                            <path d="M 0 160 Q 50 160 80 130 T 160 100 T 240 120 T 320 80 T 400 130 T 500 40" fill="none" stroke="var(--admin-accent)" stroke-width="4" stroke-linecap="round"/>
+                            
+                            <!-- Data points -->
+                            <circle cx="80" cy="130" r="6" fill="var(--bg-card)" stroke="var(--admin-accent)" stroke-width="2"/>
+                            <circle cx="160" cy="100" r="6" fill="var(--bg-card)" stroke="var(--admin-accent)" stroke-width="2"/>
+                            <circle cx="240" cy="120" r="6" fill="var(--bg-card)" stroke="var(--admin-accent)" stroke-width="2"/>
+                            <circle cx="320" cy="80" r="6" fill="var(--bg-card)" stroke="var(--admin-accent)" stroke-width="2"/>
+                            <circle cx="400" cy="130" r="6" fill="var(--bg-card)" stroke="var(--admin-accent)" stroke-width="2"/>
+                            <circle cx="500" cy="40" r="6" fill="var(--bg-card)" stroke="#10b981" stroke-width="2"/>
+
+                            <!-- Value Labels -->
+                            <text x="80" y="115" fill="white" font-size="12" text-anchor="middle" font-family="Inter, sans-serif" font-weight="bold">$120k</text>
+                            <text x="160" y="85" fill="white" font-size="12" text-anchor="middle" font-family="Inter, sans-serif" font-weight="bold">$180k</text>
+                            <text x="240" y="105" fill="white" font-size="12" text-anchor="middle" font-family="Inter, sans-serif" font-weight="bold">$160k</text>
+                            <text x="320" y="65" fill="white" font-size="12" text-anchor="middle" font-family="Inter, sans-serif" font-weight="bold">$240k</text>
+                            <text x="400" y="115" fill="white" font-size="12" text-anchor="middle" font-family="Inter, sans-serif" font-weight="bold">$200k</text>
+                            <text x="500" y="25" fill="#10b981" font-size="14" text-anchor="middle" font-family="Inter, sans-serif" font-weight="bold">$428k</text>
+                        </svg>
+                        <div style="display: flex; justify-content: space-between; margin-top: 10px; color: var(--text-gray); font-size: 0.85rem; font-weight: 500;">
+                            <span>Jan</span><span style="padding-left:15px;">Feb</span><span>Mar</span><span>Apr</span><span style="padding-right:15px;">May</span><span>Jun</span>
+                        </div>
                     </div>
                 </div>
                 <div class="chart-card">
                     <h3>Studio Utilization</h3>
-                    <div class="css-donut-chart"></div>
+                    <div class="css-full-pie-chart"></div>
                     <div class="donut-legend">
                         <div class="legend-item"><span><span class="legend-color" style="background: var(--admin-accent);"></span> Stage A (VFX)</span><strong>55%</strong></div>
                         <div class="legend-item"><span><span class="legend-color" style="background: var(--admin-secondary);"></span> Stage B (Practical)</span><strong>30%</strong></div>
@@ -285,12 +319,57 @@ body {
 
         <div id="clients-tab" class="tab-content">
             <div class="tab-header"><h1>Client Management</h1><p>Overview of all active studio clients.</p></div>
-            <div class="content-card"><p style="color: var(--text-gray);">Client database interface loaded.</p></div>
+            <div class="content-card">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                    <h3>Active Client Directory</h3>
+                    <button style="background: var(--admin-accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">+ Add Client</button>
+                </div>
+                <table class="data-table">
+                    <thead><tr><th>Client Name</th><th>Company</th><th>Active Projects</th><th>Status</th></tr></thead>
+                    <tbody>
+                        <tr><td>Michael B.</td><td>Stackly Studios</td><td>2</td><td><span class="status-badge status-active">VIP</span></td></tr>
+                        <tr><td>Emma Watson</td><td>Independent</td><td>1</td><td><span class="status-badge status-prep">STANDARD</span></td></tr>
+                        <tr><td>James T.</td><td>Global Media</td><td>3</td><td><span class="status-badge status-active">VIP</span></td></tr>
+                        <tr><td>Sarah Jenkins</td><td>Creative Arts</td><td>1</td><td><span class="status-badge status-maint">INACTIVE</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div id="crew-tab" class="tab-content">
             <div class="tab-header"><h1>Crew Scheduling</h1><p>Allocate directors, DoPs, and VFX artists to stages.</p></div>
-            <div class="content-card"><p style="color: var(--text-gray);">Crew timeline loaded.</p></div>
+            <div class="content-card" style="background: transparent; border: none; padding: 0;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="avatar" style="background: #8b5cf6;">DW</div>
+                            <div><h4 style="margin:0;">David Webb</h4><p style="margin:0; font-size:0.8rem; color:var(--text-gray);">Cinematographer</p></div>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #10b981;">On Set: Stage A</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="avatar" style="background: var(--admin-accent);">SJ</div>
+                            <div><h4 style="margin:0;">Sarah Jenkins</h4><p style="margin:0; font-size:0.8rem; color:var(--text-gray);">Director</p></div>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #3b82f6;">Pre-Production</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="avatar" style="background: #10b981;">MR</div>
+                            <div><h4 style="margin:0;">Mark Ruffalo</h4><p style="margin:0; font-size:0.8rem; color:var(--text-gray);">Lead VFX Artist</p></div>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-gray);">Available</p>
+                    </div>
+                    <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="avatar" style="background: #f43f5e;">AK</div>
+                            <div><h4 style="margin:0;">Anna Kendrick</h4><p style="margin:0; font-size:0.8rem; color:var(--text-gray);">Sound Engineer</p></div>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #f59e0b;">On Set: Sound Booth 1</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="equipment-tab" class="tab-content">
@@ -310,12 +389,66 @@ body {
 
         <div id="financials-tab" class="tab-content">
             <div class="tab-header"><h1>Financials</h1><p>Detailed revenue and operational cost breakdown.</p></div>
-            <div class="content-card"><p style="color: var(--text-gray);">Financial reports loaded.</p></div>
+            <div class="content-card">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                    <div style="padding: 1.5rem; background: rgba(16,185,129,0.1); border-radius: 12px; border: 1px solid rgba(16,185,129,0.2);">
+                        <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 0.5rem;">Q3 Revenue</p>
+                        <h3 style="color: #10b981; font-size: 2rem; margin: 0;">$1.2M</h3>
+                    </div>
+                    <div style="padding: 1.5rem; background: rgba(244,63,94,0.1); border-radius: 12px; border: 1px solid rgba(244,63,94,0.2);">
+                        <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 0.5rem;">Q3 Expenses</p>
+                        <h3 style="color: #f43f5e; font-size: 2rem; margin: 0;">$450K</h3>
+                    </div>
+                    <div style="padding: 1.5rem; background: rgba(59,130,246,0.1); border-radius: 12px; border: 1px solid rgba(59,130,246,0.2);">
+                        <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 0.5rem;">Net Profit</p>
+                        <h3 style="color: #3b82f6; font-size: 2rem; margin: 0;">$750K</h3>
+                    </div>
+                </div>
+                <h3>Recent Transactions</h3>
+                <table class="data-table" style="margin-top: 1rem;">
+                    <thead><tr><th>Date</th><th>Description</th><th>Type</th><th>Amount</th></tr></thead>
+                    <tbody>
+                        <tr><td>Oct 20, 2026</td><td>Invoice Payment: Stackly Studios</td><td><span style="color: #10b981;">Income</span></td><td>+$125,000</td></tr>
+                        <tr><td>Oct 18, 2026</td><td>Equipment Lease: ARRI Cameras</td><td><span style="color: #f43f5e;">Expense</span></td><td>-$45,000</td></tr>
+                        <tr><td>Oct 15, 2026</td><td>Invoice Payment: Global Media</td><td><span style="color: #10b981;">Income</span></td><td>+$85,000</td></tr>
+                        <tr><td>Oct 10, 2026</td><td>Studio Maintenance</td><td><span style="color: #f43f5e;">Expense</span></td><td>-$12,500</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div id="settings-tab" class="tab-content">
             <div class="tab-header"><h1>System Settings</h1><p>Configure studio-wide parameters.</p></div>
-            <div class="content-card"><p style="color: var(--text-gray);">Settings interface loaded.</p></div>
+            <div class="content-card">
+                <form style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 800px;">
+                    <div style="grid-column: 1 / -1;">
+                        <h3 style="margin-bottom: 1rem;">General Studio Configurations</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="font-weight: 600; color: var(--text-gray);">Studio Name</label>
+                        <input type="text" value="FilmStudio Inc." style="padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="font-weight: 600; color: var(--text-gray);">Contact Email</label>
+                        <input type="email" value="admin@filmstudio.com" style="padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="font-weight: 600; color: var(--text-gray);">Tax Rate (%)</label>
+                        <input type="number" value="15" style="padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="font-weight: 600; color: var(--text-gray);">Default Currency</label>
+                        <select style="padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
+                            <option>USD ($)</option>
+                            <option>EUR (€)</option>
+                            <option>GBP (£)</option>
+                        </select>
+                    </div>
+                    <div style="grid-column: 1 / -1; margin-top: 1rem;">
+                        <button type="button" style="background: var(--admin-accent); color: white; border: none; padding: 0.75rem 2rem; border-radius: 6px; cursor: pointer; font-weight: 600;">Save Configurations</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </main>
 
@@ -328,6 +461,70 @@ body {
         }
         // Force initial active tab
         document.getElementById('dashboard-tab').style.display = 'block';
+    </script>
+
+    <!-- Profile Name Extractor -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            
+            if (email) {
+                // Extract name (e.g., john.doe@gmail.com -> john doe)
+                let namePart = email.split('@')[0];
+                namePart = namePart.replace(/[._+0-9]/g, ' ').trim();
+                
+                let words = namePart.split(' ').filter(w => w.length > 0);
+                for (let i = 0; i < words.length; i++) {
+                    words[i] = words[i][0].toUpperCase() + words[i].substr(1).toLowerCase();
+                }
+                
+                let fullName = words.join(' ');
+                let initials = '';
+                
+                if (words.length >= 2) {
+                    initials = words[0][0] + words[words.length-1][0];
+                } else if (words.length === 1 && words[0].length > 0) {
+                    initials = words[0].substring(0, 2);
+                } else {
+                    fullName = "User";
+                    initials = "U";
+                }
+                
+                initials = initials.toUpperCase();
+                
+                
+                // Update Welcome Header
+                const welcomeHeader = document.querySelector('#dashboard-tab .tab-header h1');
+                if (welcomeHeader) {
+                    if (welcomeHeader.textContent.includes('Welcome, Director') || welcomeHeader.textContent.includes('Dashboard Overview')) {
+                        welcomeHeader.textContent = 'Welcome, ' + fullName;
+                    }
+                }
+
+                // Update Top Bar UI
+                const nameElements = document.querySelectorAll('.user-profile span');
+                const avatarElements = document.querySelectorAll('.user-profile .avatar, .avatar-preview');
+                
+                nameElements.forEach(el => el.textContent = fullName);
+                avatarElements.forEach(el => el.textContent = initials);
+                
+                // Try to update Settings form if it exists
+                const inputs = document.querySelectorAll('.settings-form input[type="text"], .settings-form input[type="email"]');
+                inputs.forEach(input => {
+                    if (input.value === 'Michael' && words.length > 0) input.value = words[0];
+                    if (input.value === 'B.' && words.length > 1) input.value = words.slice(1).join(' ');
+                    if (input.value === 'michael@example.com') input.value = email;
+                });
+            }
+        });
+    </script>
+
+
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('mobile-open');
+        }
     </script>
 </body>
 </html>

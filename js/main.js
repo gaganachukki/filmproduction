@@ -75,6 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileBtn && navLinks) {
         mobileBtn.addEventListener('click', () => {
             navLinks.classList.toggle('nav-active');
+            mobileBtn.style.opacity = '0';
         });
+        const closeBtn = document.querySelector('.nav-close-btn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                navLinks.classList.remove('nav-active');
+                setTimeout(() => mobileBtn.style.opacity = '1', 300); // restore after slide animation
+            });
+        }
     }
 });

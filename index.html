@@ -28,7 +28,7 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover;
-            background-position: center;
+            background-position: top center;
             opacity: 0;
             animation: fadeSlideshow 15s infinite;
         }
@@ -59,12 +59,18 @@
             <img src="assets/logo.webp" alt="Stackly" style="max-height: 36px; width: auto; display: block;">
         </a>
         <nav class="nav-links">
+            <button class="nav-close-btn" aria-label="Close Menu">
+                <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
             <a href="index.html" class="active">Home</a>
             <a href="about.html">About</a>
             <a href="projects.html">Projects</a>
             <a href="services.html">Services</a>
             <a href="blog.html">Blog</a>
             <a href="contact.html">Contact</a>
+            <a href="login.html" class="sidebar-login-btn">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Login
+            </a>
         </nav>
         
         <button class="mobile-menu-btn" aria-label="Toggle Menu">
@@ -129,20 +135,20 @@
 
         <section class="content-section" style="background-color: var(--bg-card);">
             <h2 class="section-title animate-on-scroll">Our Featured <span class="highlight">Work</span></h2>
-            <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+            <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));">
                 <div class="card animate-on-scroll" style="padding: 0; overflow: hidden; position: relative;">
-                    <img src="assets/projects_cover.webp" alt="Project 1" style="width: 100%; height: 250px; object-fit: cover; display: block;">
+                    <img src="assets/hero.webp" alt="Project 1" style="width: 100%; height: 250px; object-fit: cover; display: block;">
                     <div style="padding: 1.5rem;">
-                        <h3>Neon Horizons</h3>
-                        <p style="margin-bottom: 1rem;">Award-winning Sci-Fi feature film exploring the depths of AI consciousness.</p>
+                        <h3>Interstellar</h3>
+                        <p style="margin-bottom: 1rem;">Award-winning Sci-Fi feature film exploring the depths of Space and Time.</p>
                         <a href="projects.html" style="color: var(--highlight-blue); text-decoration: none; font-weight: 600;">View Project &rarr;</a>
                     </div>
                 </div>
                 <div class="card animate-on-scroll" style="padding: 0; overflow: hidden; position: relative;">
-                    <img src="assets/about_cover.webp" alt="Project 2" style="width: 100%; height: 250px; object-fit: cover; display: block;">
+                    <img src="assets/hero5.webp" alt="Project 2" style="width: 100%; height: 250px; object-fit: cover; display: block;">
                     <div style="padding: 1.5rem;">
-                        <h3>The Last Dawn</h3>
-                        <p style="margin-bottom: 1rem;">A high-octane action thriller set against the backdrop of a post-apocalyptic world.</p>
+                        <h3>Mission Impossible</h3>
+                        <p style="margin-bottom: 1rem;">A Spy who is ghost must save the world with his team before it goes out of hand.</p>
                         <a href="projects.html" style="color: var(--highlight-blue); text-decoration: none; font-weight: 600;">View Project &rarr;</a>
                     </div>
                 </div>
@@ -156,9 +162,9 @@
                     <svg viewBox="0 0 24 24" width="32" height="32" fill="var(--highlight-blue)" style="margin-bottom: 1rem;"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
                     <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem;">"Working with FilmStudio was a game-changer. Their technical expertise and creative vision brought our commercial to life in ways we never imagined."</p>
                     <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white;">MR</div>
+                        <img src="assets/james.webp" alt="James Rossi" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-blue);">
                         <div>
-                            <h4 style="color: var(--text-white); margin-bottom: 0.2rem;">Marcus Rossi</h4>
+                            <h4 style="color: var(--text-white); margin-bottom: 0.2rem;">James Rossi</h4>
                             <p style="font-size: 0.85rem; color: var(--text-gray);">Creative Director, Zenith Brands</p>
                         </div>
                     </div>
@@ -167,7 +173,7 @@
                     <svg viewBox="0 0 24 24" width="32" height="32" fill="var(--highlight-blue)" style="margin-bottom: 1rem;"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
                     <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem;">"The post-production suite at FilmStudio is world-class. The sound mixing and color grading pushed our indie film to Sundance quality."</p>
                     <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white;">SL</div>
+                        <img src="assets/sarah.webp" alt="Sarah Lin" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-blue);">
                         <div>
                             <h4 style="color: var(--text-white); margin-bottom: 0.2rem;">Sarah Lin</h4>
                             <p style="font-size: 0.85rem; color: var(--text-gray);">Independent Filmmaker</p>
@@ -280,11 +286,11 @@
                 <p class="contact-title">Get in Touch</p>
                 <div class="contact-item">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    <span>Hollywood, California</span>
+                    <span>Salem, Tamil Nadu</span>
                 </div>
                 <div class="contact-item">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    <span>+1 234 567 8901</span>
+                    <span>+91 98765 43210</span>
                 </div>
                 <div class="contact-item">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>

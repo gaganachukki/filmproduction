@@ -152,7 +152,7 @@
 }
 .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
     gap: 2rem;
     max-width: 1200px;
     margin: 3rem auto 0;
@@ -220,7 +220,10 @@
     .vp-image { min-height: 300px; }
     .vp-image::after { background: linear-gradient(180deg, rgba(2,6,23,0) 0%, var(--bg-dark) 100%); }
     .vp-content { padding: 4rem 2rem; }
-    .pricing-card.featured { transform: none; }
+    
+    .pricing-card.featured { transform: none !important; }
+    .pricing-card { max-width: 100% !important; box-sizing: border-box !important; }
+
     .pricing-card.featured:hover { transform: translateY(-10px); }
 }
 @media (max-width: 768px) {
@@ -240,7 +243,14 @@
     .vp-content { padding: 3rem 1.5rem; }
     .tech-grid { grid-template-columns: 1fr; }
     .pricing-grid { grid-template-columns: 1fr; }
-    .pricing-card.featured { transform: none; }
+
+    .pricing-section { padding: 4rem 1.5rem; }
+    .pricing-card { padding: 2rem 1.5rem; }
+
+    
+    .pricing-card.featured { transform: none !important; }
+    .pricing-card { max-width: 100% !important; box-sizing: border-box !important; }
+
     .faq-section { padding: 3rem 1.5rem; }
 
 }

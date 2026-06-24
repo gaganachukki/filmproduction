@@ -19,7 +19,8 @@ body {
     font-family: 'Inter', sans-serif; 
     background-color: var(--bg-dark); 
     color: var(--text-white);
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 280px 1fr; /* BULLETPROOF LAYOUT */
 }
@@ -33,6 +34,7 @@ body {
     height: 100vh;
     position: sticky;
     top: 0;
+    overflow-y: auto;
 }
 .sidebar-logo { padding: 0 2rem; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.5rem; }
 .sidebar-logo img { height: 36px; width: fit-content; }
@@ -48,12 +50,7 @@ body {
 .logout-link { color: #ef4444; }
 
 /* MAIN CONTENT AREA */
-.dashboard-main {
-    padding: 2rem 3rem;
-    overflow-y: auto;
-    height: 100vh;
-    position: relative;
-}
+.dashboard-main { width: 100%; padding: 1.5rem 1rem; height: auto; overflow-y: visible; }
 .topbar-actions {
     display: flex; justify-content: flex-end; align-items: center; gap: 1.5rem;
     margin-bottom: 2rem;
@@ -81,6 +78,54 @@ body {
 .tab-header { margin-bottom: 2rem; }
 .tab-header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
 .tab-header p { color: var(--text-gray); }
+
+
+/* SETTINGS FORM STYLES */
+.settings-container { display: flex; flex-direction: column; gap: 2rem; }
+.settings-section { background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+.settings-section h2 { font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--highlight-blue); }
+.settings-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.settings-form.single-col { grid-template-columns: 1fr; }
+.form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.form-group label { font-size: 0.9rem; font-weight: 500; color: var(--text-gray); }
+.form-control { 
+    background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); 
+    padding: 0.8rem 1rem; border-radius: 8px; color: white; font-family: 'Inter', sans-serif;
+    transition: border-color 0.3s; width: 100%;
+}
+.form-control:focus { outline: none; border-color: var(--highlight-blue); }
+.settings-avatar-upload { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+.avatar-preview { 
+    width: 80px; height: 80px; border-radius: 50%; background: var(--primary-blue); 
+    display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold;
+}
+.btn-outline { 
+    background: transparent; border: 1px solid var(--highlight-blue); color: var(--highlight-blue); 
+    padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; transition: all 0.3s;
+}
+.btn-outline:hover { background: rgba(59,130,246,0.1); }
+.btn-save { 
+    background: var(--primary-blue); color: white; border: none; 
+    padding: 0.8rem 2rem; border-radius: 6px; cursor: pointer; font-weight: 600;
+    transition: background 0.3s; margin-top: 1rem; display: inline-block;
+}
+.btn-save:hover { background: var(--primary-blue-hover); }
+
+.toggle-group { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.toggle-group:last-child { border-bottom: none; }
+.toggle-label { font-size: 0.95rem; }
+.toggle-desc { font-size: 0.8rem; color: var(--text-gray); margin-top: 0.2rem; }
+/* Custom Switch */
+.switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 24px; }
+.slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: var(--highlight-blue); }
+input:checked + .slider:before { transform: translateX(20px); }
+
+@media (max-width: 768px) {
+    .settings-form { grid-template-columns: 1fr; }
+}
 
 /* COMPONENTS */
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
@@ -139,42 +184,36 @@ body {
     
         /* DASHBOARD MOBILE RESPONSIVENESS */
         @media (max-width: 768px) {
-            body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+            body { display: block; height: auto; overflow: auto; min-height: 100vh; overflow-x: hidden; }
             
-            /* Hide top sidebar stuff */
-            .sidebar-logo, .sidebar-bottom { display: none; }
             
-            /* Convert sidebar to bottom nav */
             .sidebar { 
-                position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; 
-                flex-direction: row; padding: 0; z-index: 1000;
-                border-right: none; border-top: 1px solid rgba(255,255,255,0.1);
-                background: var(--bg-card);
+                position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; overflow-y: auto; 
+                z-index: 3000; border-right: none; background: var(--bg-card);
+                transition: left 0.3s ease; padding: 2rem 0;
             }
-            .sidebar-menu { 
-                flex-direction: row; padding: 0; width: 100%; 
-                justify-content: space-around; align-items: center;
-                overflow-x: auto;
-            }
-            .sidebar-link { 
-                flex-direction: column; gap: 0.2rem; padding: 0.5rem; 
-                font-size: 0.65rem; border-left: none; border-top: 3px solid transparent;
-                border-radius: 0; text-align: center; flex: 1; min-width: 70px;
-                white-space: nowrap;
-            }
-            .sidebar-link.active { border-top-color: var(--highlight-blue); border-left-color: transparent; }
-            .sidebar-link svg { width: 22px; height: 22px; margin: 0 auto; }
+            .sidebar.mobile-open { left: 0; }
+            .mobile-nav-group { display: flex !important; }
+            .mobile-hamburger { display: block !important; }
+            .mobile-topbar-logo { display: block !important; margin-right: auto !important; }
+            .user-profile span { display: none; }
+
+            .mobile-close-btn { display: block !important; position: absolute; top: 1.5rem; right: 1.5rem; background: transparent; border: none; color: white; cursor: pointer; }
             
             /* Main Content Adjustments */
-            .dashboard-main { 
-                width: 100%; padding: 1.5rem 1rem 80px 1rem; 
-                height: calc(100vh - 70px); 
-            }
+            .dashboard-main { width: 100%; padding: 1.5rem 1rem; height: auto; overflow-y: visible; }
             .topbar-actions { flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
             .search-bar { width: 100%; order: 3; }
             
             /* Typography & Grids */
-            .tab-header h1 { font-size: 1.8rem; }
+            .tab-header h1 { font-size: 1.4rem; }
+            .tab-header p { font-size: 0.85rem; }
+            .stat-info h3 { font-size: 1.6rem; }
+            .stat-info p { font-size: 0.75rem; }
+            .stat-icon { width: 45px; height: 45px; }
+            .stat-icon svg { width: 22px; height: 22px; }
+            .chart-card h3 { font-size: 1rem; }
+            .user-profile .avatar { width: 32px; height: 32px; font-size: 0.8rem; }
             .stats-grid { grid-template-columns: 1fr; gap: 1rem; }
             .charts-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .content-card { padding: 1rem; overflow-x: auto; }
@@ -186,27 +225,30 @@ body {
 </head>
 <body>
     <aside class="sidebar">
+        <button class="mobile-close-btn" onclick="toggleSidebar()" style="display:none;">
+            <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
         <div class="sidebar-logo">
             <img src="assets/logo.webp" alt="Stackly">
             <span class="sidebar-role">Client Panel</span>
         </div>
         <nav class="sidebar-menu">
-            <a href="#" class="sidebar-link active" onclick="switchTab('dashboard', this)">
+            <a href="#" class="sidebar-link active" onclick="toggleSidebar(); switchTab('dashboard', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Dashboard
             </a>
-            <a href="#" class="sidebar-link" onclick="switchTab('projects', this)">
+            <a href="#" class="sidebar-link" onclick="toggleSidebar(); switchTab('projects', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg> My Projects
             </a>
-            <a href="#" class="sidebar-link" onclick="switchTab('invoices', this)">
+            <a href="#" class="sidebar-link" onclick="toggleSidebar(); switchTab('invoices', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Invoices
             </a>
-            <a href="#" class="sidebar-link" onclick="switchTab('bookings', this)">
+            <a href="#" class="sidebar-link" onclick="toggleSidebar(); switchTab('bookings', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Studio Bookings
             </a>
-            <a href="#" class="sidebar-link" onclick="switchTab('assets', this)">
+            <a href="#" class="sidebar-link" onclick="toggleSidebar(); switchTab('assets', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Asset Library
             </a>
-            <a href="#" class="sidebar-link" onclick="switchTab('settings', this)">
+            <a href="#" class="sidebar-link" onclick="toggleSidebar(); switchTab('settings', this)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle></svg> Settings
             </a>
         </nav>
@@ -219,6 +261,12 @@ body {
 
     <main class="dashboard-main">
         <div class="topbar-actions">
+            <div class="mobile-nav-group" style="display: none; align-items: center; gap: 1rem; margin-right: auto;">
+                <button class="mobile-hamburger" onclick="toggleSidebar()" aria-label="Toggle Menu" style="background:transparent; border:none; color:white; cursor:pointer;">
+                    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <img src="assets/logo.webp" class="mobile-topbar-logo" style="height: 24px;" alt="Logo">
+            </div>
             <div class="search-bar">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 <input type="text" placeholder="Search projects...">
@@ -321,7 +369,103 @@ body {
 
         <div id="settings-tab" class="tab-content">
             <div class="tab-header"><h1>Settings</h1><p>Update your account details and preferences.</p></div>
-            <div class="content-card"><p style="color: var(--text-gray);">Account settings form goes here.</p></div>
+            
+            <div class="settings-container">
+                <!-- Profile Information -->
+                <div class="settings-section">
+                    <h2>Profile Information</h2>
+                    <div class="settings-avatar-upload">
+                        <div class="avatar-preview">MB</div>
+                        <div>
+                            <button class="btn-outline" style="margin-bottom: 0.5rem; display: block;">Upload New Avatar</button>
+                            <span style="font-size: 0.8rem; color: var(--text-gray);">Recommended size: 256x256px.</span>
+                        </div>
+                    </div>
+                    <form class="settings-form" onsubmit="event.preventDefault();">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" class="form-control" value="Michael">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" value="B.">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" class="form-control" value="michael@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" class="form-control" value="+1 (555) 123-4567">
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>Company / Studio Name</label>
+                            <input type="text" class="form-control" value="Independent Creator">
+                        </div>
+                        <div style="grid-column: 1 / -1;">
+                            <button type="submit" class="btn-save">Save Profile Details</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Notification Preferences -->
+                <div class="settings-section">
+                    <h2>Notification Preferences</h2>
+                    <div class="toggle-group">
+                        <div>
+                            <div class="toggle-label">Project Status Updates</div>
+                            <div class="toggle-desc">Get notified when your project moves to a new production phase.</div>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="toggle-group">
+                        <div>
+                            <div class="toggle-label">Daily Render Deliveries</div>
+                            <div class="toggle-desc">Receive an email when new daily renders are uploaded to the Asset Library.</div>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="toggle-group">
+                        <div>
+                            <div class="toggle-label">Billing & Invoices</div>
+                            <div class="toggle-desc">Alert me when a new invoice is generated or payment is due.</div>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="toggle-group">
+                        <div>
+                            <div class="toggle-label">Marketing Emails</div>
+                            <div class="toggle-desc">Receive updates about new studio equipment and stage availability.</div>
+                        </div>
+                        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                    </div>
+                </div>
+
+                <!-- Security & Password -->
+                <div class="settings-section">
+                    <h2>Security</h2>
+                    <form class="settings-form single-col" onsubmit="event.preventDefault();">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" class="form-control" placeholder="••••••••">
+                        </div>
+                        <div class="settings-form">
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input type="password" class="form-control" placeholder="••••••••">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm New Password</label>
+                                <input type="password" class="form-control" placeholder="••••••••">
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn-save">Update Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -334,6 +478,70 @@ body {
         }
         // Force initial active tab
         document.getElementById('dashboard-tab').style.display = 'block';
+    </script>
+
+    <!-- Profile Name Extractor -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            
+            if (email) {
+                // Extract name (e.g., john.doe@gmail.com -> john doe)
+                let namePart = email.split('@')[0];
+                namePart = namePart.replace(/[._+0-9]/g, ' ').trim();
+                
+                let words = namePart.split(' ').filter(w => w.length > 0);
+                for (let i = 0; i < words.length; i++) {
+                    words[i] = words[i][0].toUpperCase() + words[i].substr(1).toLowerCase();
+                }
+                
+                let fullName = words.join(' ');
+                let initials = '';
+                
+                if (words.length >= 2) {
+                    initials = words[0][0] + words[words.length-1][0];
+                } else if (words.length === 1 && words[0].length > 0) {
+                    initials = words[0].substring(0, 2);
+                } else {
+                    fullName = "User";
+                    initials = "U";
+                }
+                
+                initials = initials.toUpperCase();
+                
+                
+                // Update Welcome Header
+                const welcomeHeader = document.querySelector('#dashboard-tab .tab-header h1');
+                if (welcomeHeader) {
+                    if (welcomeHeader.textContent.includes('Welcome, Director') || welcomeHeader.textContent.includes('Dashboard Overview')) {
+                        welcomeHeader.textContent = 'Welcome, ' + fullName;
+                    }
+                }
+
+                // Update Top Bar UI
+                const nameElements = document.querySelectorAll('.user-profile span');
+                const avatarElements = document.querySelectorAll('.user-profile .avatar, .avatar-preview');
+                
+                nameElements.forEach(el => el.textContent = fullName);
+                avatarElements.forEach(el => el.textContent = initials);
+                
+                // Try to update Settings form if it exists
+                const inputs = document.querySelectorAll('.settings-form input[type="text"], .settings-form input[type="email"]');
+                inputs.forEach(input => {
+                    if (input.value === 'Michael' && words.length > 0) input.value = words[0];
+                    if (input.value === 'B.' && words.length > 1) input.value = words.slice(1).join(' ');
+                    if (input.value === 'michael@example.com') input.value = email;
+                });
+            }
+        });
+    </script>
+
+
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('mobile-open');
+        }
     </script>
 </body>
 </html>
